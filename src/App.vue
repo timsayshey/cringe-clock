@@ -55,7 +55,7 @@ export default {
     startFlashing() {
       this.flashingInterval = setInterval(() => {
         this.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-      }, 500); // Change color every 500ms
+      }, 1000); // Change color every 500ms
       this.isFlashing = true;
     },
     stopFlashing() {
