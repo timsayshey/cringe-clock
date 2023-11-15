@@ -6,6 +6,11 @@ Welcome to **Cringe Clock** - the Pomodoro timer that's so in-your-face, you can
 
 Cringe Clock is not your grandma's Pomodoro timer. It's a ticking, flashing, always-on-top reminder that time is slipping away, and you should probably be doing something more productive than you are right now.
 
+### DEMO
+
+https://github.com/timsayshey/cringe-clock/assets/1148940/dfba60bf-d612-47f8-abaf-9542b457010e
+
+
 ### Features
 
 - **Always On Top**: Like the most annoying friend who won't let you bail on gym day, Cringe Clock stays in your face.
