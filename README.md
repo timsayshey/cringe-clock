@@ -2,6 +2,10 @@
 
 Welcome to **Cringe Clock** - the Pomodoro timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a butterfly!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole or spent 4 hours making another stupid pomodoro (like I just did) when you were supposed to be working, this is for you.
 
+# [Click here to Download Installer](https://github.com/timsayshey/cringe-clock/releases)
+
+
+
 ## What is This Madness? 🤔
 
 Cringe Clock is not your grandma's Pomodoro timer. It's a ticking, flashing, always-on-top reminder that time is slipping away, and you should probably be doing something more productive than you are right now.
