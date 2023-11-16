@@ -43,8 +43,8 @@ div(v-if="showOptions")
     label(for="startingBpm") Color Change Rate (BPM):
     input(type="number", id="startingBpm", v-model="startingBPM")
   .option
-    label(for="manualStart") Manual Start Next Phase:
-    input(type="checkbox", id="manualStart", v-model="manualStart")
+    label(for="autoStartPhase") Auto-Start Each Phase:
+    input(type="checkbox", id="autoStartPhase", v-model="autoStartPhase")
   button(@click="toggleOptions") Save
   .option
     //- Show Electron App Version
@@ -75,7 +75,7 @@ export default {
       startingBPM: 60,
       selectedTickingSound: 'bubbles',
       volume: 0.2,
-      manualStart: false,
+      autoStartPhase: true,
       workDurationMinutes: 25, // Default 25 minutes
       breakDurationMinutes: 5, // Default 5 minutes
       tickingSounds: {
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     saveOptions() {
-      const whitelist = ['manualStart', 'isFunMode', 'task', 'isMuted', 'volume', 'selectedTickingSound', 'workDurationMinutes', 'breakDurationMinutes', 'startingBPM']; // Add serializable and necessary properties here
+      const whitelist = ['autoStartPhase', 'isFunMode', 'task', 'isMuted', 'volume', 'selectedTickingSound', 'workDurationMinutes', 'breakDurationMinutes', 'startingBPM']; // Add serializable and necessary properties here
       const dataToSave = {} as Record<string, any>;
       whitelist.forEach(key => {
         dataToSave[key] = (this as any)[key];
@@ -150,26 +150,21 @@ export default {
       this.timer = null;
       this.playEndSound();
 
-      if (!this.manualStart) {
+      // Transition to the next phase, but don't start the timer automatically
+      if (!this.autoStartPhase) {
+        this.isBreakTime = !this.isBreakTime; // Toggle the phase
+        this.timerState = 'idle'; // Set the timer state to idle
+      } else {
+        // If autoStartPhase is enabled, automatically start the next phase
         if (this.isBreakTime) {
-          this.timerState = 'idle';
+          // Transition from break to work
           this.isBreakTime = false;
+          this.startTimer(false); // Start work timer
         } else {
-          this.timerState = 'onBreak';
+          // Transition from work to break
           this.isBreakTime = true;
+          this.startTimer(true); // Start break timer
         }
-      } else {
-        this.timerState = 'idle';
-      }
-
-      if (this.isBreakTime) {
-        // If break time has just ended
-        this.timerState = 'idle'; // Change state to idle instead of immediately starting work
-        this.isBreakTime = false; // Set isBreakTime to false, indicating break is over
-      } else {
-        // If work time has just ended
-        this.timerState = 'onBreak'; // Change state to onBreak instead of immediately starting break
-        this.isBreakTime = true; // Set isBreakTime to true, indicating work is over and it's time for a break
       }
     },
     startBreak() {
