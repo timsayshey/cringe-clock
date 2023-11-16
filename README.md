@@ -2,7 +2,7 @@
 
 # Cringe Clock - Desktop Pomodoro App for the Wildly Distractible
 
-Welcome to **Cringe Clock** - the cross-platform desktop timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a butterfly!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole or spent 4 hours making another stupid pomodoro (like I just did) when you were supposed to be working, this is for you.
+Welcome to **Cringe Clock** - the cross-platform desktop timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a squirrel!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole when you were supposed to be working, this is for you.
 
 ### Supports Windows, Mac, and Linux
 
