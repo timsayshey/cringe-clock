@@ -4,10 +4,10 @@ const path = require('path');
 let mainWindow;
 
 function createWindow() {
-  const iconPath = path.join(app.getAppPath(), 'public', 'icon2.png');
+  const iconPath = path.join(app.getAppPath(), 'public', 'ccicon.png');
   mainWindow = new BrowserWindow({
-    width: 166,
-    height: 265,
+    width: 150,
+    height: 240,
     alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true, // Be cautious with security implications

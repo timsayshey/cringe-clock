@@ -2,27 +2,31 @@
 component(:is="'style'")
   | body { background-color: {{isBreakTime ? '' : backgroundColor}}!important; }
 div
-  h1 {{ displayTime }}
-  p {{ phase }}
-  button(v-if="timerState === 'idle' || timerState === 'paused'", @click="startTimer") ▶️ Start
-  button(v-if="timerState === 'running'", @click="stopTimer") ⏹️ Stop
-  button(v-if="!isBreakTime", @click="startBreak") ⏭️ Skip to Break
+  h1(style="margin:0") {{ displayTime }}
+  b(:style="`color:${phase == 'Break' ? 'green' : ''}`") {{ phase }}
+  input.task(type="text", placeholder="Task", style="margin: 10px 0")
+  button(v-if="timerState != 'running' && isBreakTime", @click="startBreak") ▶️ Start Break
+  button(v-else-if="timerState != 'running'", @click="backToWork") ▶️ Start Work
+  button(v-else-if="!isBreakTime", @click="startBreak") ⏭️ Skip to Break
+  button(v-else, @click="backToWork") ⏭️ Back to Work
   button(@click="toggleFlashing") 🤪 Cringe {{ isFlashing ? 'On' : 'Off'}}
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
       isBreakTime: false,
-      audio: new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_dbb9bd8504.mp3?filename=pop-39222.mp3'),
+      tickingAudio: new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_dbb9bd8504.mp3?filename=pop-39222.mp3'),
+      breakendAudio: new Audio('https://www.myinstants.com/media/sounds/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
+      workendAudio: new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3'),
       workDuration: 25 * 60, // 25 minutes
       breakDuration: 5 * 60, // 5 minutes
       timeLeft: 0,
-      timer: null,
+      timer: null as any,
       timerState: 'idle', // 'idle', 'running', 'paused', 'onBreak'
       completedPomodoros: 0,
-      flashingInterval: null,
+      flashingInterval: null as number | null,
       isFlashing: false,
       backgroundColor: '',
     };
@@ -38,80 +42,104 @@ export default {
     },
   },
   methods: {
+    startTimer(isBreakTime: boolean = false) {
+      this.isBreakTime = isBreakTime;
+      clearInterval(this.timer);
+      this.timerState = 'running';
+      this.timeLeft = isBreakTime ? this.breakDuration : this.workDuration;
+      this.timer = setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft--;
+        } else {
+          this.completeInterval();
+        }
+      }, 1000);
+      if(this.isFlashing && !this.isBreakTime) {
+        this.playTickingSound();
+      }
+    },
+    completeInterval() {
+      this.stopTickingSound();
+      clearInterval(this.timer);
+      this.timer = null;
+      this.playEndSound();
+      if (this.isBreakTime) {
+        // If break time has just ended
+        this.timerState = 'idle'; // Change state to idle instead of immediately starting work
+        this.isBreakTime = false; // Set isBreakTime to false, indicating break is over
+      } else {
+        // If work time has just ended
+        this.timerState = 'onBreak'; // Change state to onBreak instead of immediately starting break
+        this.isBreakTime = true; // Set isBreakTime to true, indicating work is over and it's time for a break
+      }
+    },
     startBreak() {
+      this.stopTickingSound();
       this.isBreakTime = true;
       this.timeLeft = this.breakDuration;
-      this.stopSound();
+      this.timerState = 'onBreak';
+      this.startTimer(true);
     },
-    playSound() {
-      this.audio.volume = 0.2;
-      this.audio.loop = true;
-      this.audio.play();
+    backToWork() {
+      this.isBreakTime = false;
+      this.timeLeft = this.workDuration;
+      this.startTimer(false);
     },
-    stopSound() {
-      this.audio.pause();
-      this.audio.currentTime = 0;
+    stopTickingSound() {
+      this.tickingAudio.pause();
+      this.tickingAudio.currentTime = 0;
     },
     startFlashing() {
+      clearInterval(this.flashingInterval as number);
       this.flashingInterval = setInterval(() => {
         this.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
       }, 1000); // Change color every 500ms
       this.isFlashing = true;
     },
     stopFlashing() {
-      clearInterval(this.flashingInterval);
+      clearInterval(this.flashingInterval as number);
       this.backgroundColor = '';
       this.isFlashing = false;
     },
     toggleFlashing() {
       if (this.isFlashing) {
         this.stopFlashing();
-        this.stopSound();
+        this.stopTickingSound();
       } else {
         this.startFlashing();
-        this.playSound();
-      }
-    },
-    startTimer() {
-      this.isBreakTime = false;
-      if (!this.timer) {
-        this.timerState = 'running';
-        this.timeLeft = this.timerState === 'onBreak' ? this.breakDuration : this.workDuration;
-        this.timer = setInterval(() => {
-          if (this.timeLeft > 0) {
-            this.timeLeft--;
-          } else {
-            this.completeInterval();
-          }
-        }, 1000);
-      }
-      if (!this.isBreakTime && this.isFlashing) {
-        this.playSound();
+        this.playTickingSound();
       }
     },
     stopTimer() {
       clearInterval(this.timer);
       this.timer = null;
       this.timerState = 'paused';
-      this.stopSound();
+      this.stopTickingSound();
     },
-    completeInterval() {
-      clearInterval(this.timer);
-      this.timer = null;
-
-      if (this.timerState === 'running') {
-        this.completedPomodoros++;
-        this.timerState = 'onBreak';
-      } else {
-        this.timerState = 'idle';
+    playTickingSound() {
+      this.tickingAudio.volume = 0.2;
+      this.tickingAudio.loop = true;
+      this.tickingAudio.play();
+    },
+    playEndSound() {
+      if(this.isFlashing) {
+        const audio = this.isBreakTime ? this.breakendAudio : this.workendAudio;
+        audio.volume = 0.2;
+        this.tickingAudio.loop = true;
+        audio.play();
       }
-      this.stopSound();
     },
   },
 };
 </script>
 
 <style>
+button {
+  width: 100%
+}
+body, div, input, button {
+  font-size: 15px;
+}
 body {
   padding: 0;
   margin: 10px 20px;
@@ -138,6 +166,17 @@ body {
 }
 h1, div, p {
   color: white;
+}
+.task {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid #ebebeba3;
+  color: white;
+  cursor:text;
+}
+.task:focus {
+  outline: none;
 }
 button {
   background-color: white;

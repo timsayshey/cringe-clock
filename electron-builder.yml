@@ -1,22 +1,12 @@
 appId: cringeclock.app.id
-productName: Cringe Clock
+productName: CringeClock
 files:
   - '**/*'
 directories:
   output: build
 win:
-  target:
-    - nsis
-    - portable
-    - msi
-  icon: public/icon2.ico
+  icon: public/ccicon.ico
 mac:
-  target:
-    - dmg
-    - pkg
-  icon: public/icon2.icns
+  icon: public/ccicon.icns
 linux:
-  target:
-    - deb
-    - AppImage
-  icon: public/icon2.png
+  icon: public/ccicon.png
