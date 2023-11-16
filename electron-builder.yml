@@ -6,7 +6,16 @@ directories:
   output: build
 win:
   icon: public/ccicon.ico
+  target:
+    - nsis
+    - portable
 mac:
   icon: public/ccicon.icns
+  target:
+    - dmg
+    - zip
 linux:
   icon: public/ccicon.png
+  target:
+    - AppImage
+    - deb

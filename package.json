@@ -1,9 +1,17 @@
 {
   "name": "cringe-clock",
-  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "EiQ Interactive LLC",
+    "email": "tim@eiqpro.com"
+  },
+  "version": "1.0.2",
   "private": true,
   "scripts": {
-    "build-electron": "electron-builder -mwl",
+    "build-electron-mac": "electron-builder -m --universal",
+    "build-electron-linux": "electron-builder -l",
+    "build-electron-windows": "electron-builder -w",
+    "build-electron": "npm run build-electron-mac && npm run build-electron-linux && npm run build-electron-windows",
     "build-vue": "vite build",
     "start": "concurrently \"ELECTRON_DEV=1 npm run electron:start\" \"npm run dev\"",
     "dev": "vite",
