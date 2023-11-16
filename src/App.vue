@@ -33,6 +33,7 @@ div(v-if="showOptions")
       option(value="tickTock") Tick tock
       option(value="cafeAmbience") Cafe ambience
       option(value="battlefield") Battlefield
+      option(value="none") None
   .option
     label(for="workTime") Work Time (minutes):
     input(type="number", id="workTime", v-model="workDurationMinutes")
@@ -57,6 +58,25 @@ div(v-if="showOptions")
 export default {
   data() {
     return {
+      countdownAudios: {
+        5: new Audio('https://outerplex.com/cringeclock/audio/countdown/001.wav'), // 10 seconds
+        20: new Audio('https://outerplex.com/cringeclock/audio/countdown/002.wav'), // 20 seconds
+        30: new Audio('https://outerplex.com/cringeclock/audio/countdown/003.wav'), // 30 seconds
+        40: new Audio('https://outerplex.com/cringeclock/audio/countdown/004.wav'), // 40 seconds
+        50: new Audio('https://outerplex.com/cringeclock/audio/countdown/005.wav'), // 50 seconds
+        60: new Audio('https://outerplex.com/cringeclock/audio/countdown/006.wav'), // 1 minutes remaining
+        90: new Audio('https://outerplex.com/cringeclock/audio/encouragements/1%20-%20Swing%20big%20home%202.wav'),
+        120: new Audio('https://outerplex.com/cringeclock/audio/countdown/007.wav'), // 2 minutes remaining
+        150: new Audio('https://outerplex.com/cringeclock/audio/encouragements/2%20-%20Sparkle%20up%20sta%201.wav'),
+        180: new Audio('https://outerplex.com/cringeclock/audio/countdown/008.wav'), // 3 minutes remaining
+        200: new Audio('https://outerplex.com/cringeclock/audio/encouragements/3%20-%20Sprint%20it%20out%202.wav'),
+        240: new Audio('https://outerplex.com/cringeclock/audio/countdown/009.wav'), // 4 minutes remaining
+        280: new Audio('https://outerplex.com/cringeclock/audio/encouragements/4%20-%20Ignite%20the%20fire%201.wav'),
+        300: new Audio('https://outerplex.com/cringeclock/audio/countdown/010.wav'), // 5 minutes remaining
+        400: new Audio('https://outerplex.com/cringeclock/audio/encouragements/5%20-%20Glide%20high%20eag%201.wav'),
+        500: new Audio('https://outerplex.com/cringeclock/audio/encouragements/6%20-%20Bust%20moves%20dan%201.wav'),
+        595: new Audio('https://outerplex.com/cringeclock/audio/encouragements/7%20-%20Roar%20loud%20jung%201.wav'),
+      } as Record<number, HTMLAudioElement>,
       isBreakTime: false,
       tickingAudio: new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_dbb9bd8504.mp3?filename=pop-39222.mp3'),
       breakendAudio: new Audio('https://www.myinstants.com/media/sounds/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
@@ -84,6 +104,7 @@ export default {
         'tickTock': 'https://cdn.pixabay.com/download/audio/2022/03/09/audio_4b7bb9d4c1.mp3?filename=ticking-clock_1-27477.mp3',
         'cafeAmbience': 'https://cdn.pixabay.com/download/audio/2021/10/10/audio_1009cd220b.mp3?filename=cafe-ambience-9263.mp3',
         'battlefield': 'https://cdn.pixabay.com/download/audio/2022/12/12/audio_ab25cea926.mp3?filename=modern-war-129016.mp3',
+        'none': '',
       } as Record<string, string>
     };
   },
@@ -107,6 +128,12 @@ export default {
     }
   },
   methods: {
+    playCountdownAudio(timeLeft: number) {
+      if (this.countdownAudios[timeLeft] && !this.isMuted && this.isFunMode && !this.isBreakTime) {
+        this.countdownAudios[timeLeft].volume = this.volume;
+        this.countdownAudios[timeLeft].play();
+      }
+    },
     saveOptions() {
       const whitelist = ['autoStartPhase', 'isFunMode', 'task', 'isMuted', 'volume', 'selectedTickingSound', 'workDurationMinutes', 'breakDurationMinutes', 'startingBPM']; // Add serializable and necessary properties here
       const dataToSave = {} as Record<string, any>;
@@ -136,6 +163,11 @@ export default {
       this.timer = setInterval(() => {
         if (this.timeLeft > 0) {
           this.timeLeft--;
+          // Play countdown audio at specific times
+          const countdownTimes = Object.keys(this.countdownAudios).map(time => parseInt(time))
+          if (countdownTimes.includes(this.timeLeft)) {
+            this.playCountdownAudio(this.timeLeft);
+          }
         } else {
           this.completeInterval();
         }
@@ -232,7 +264,7 @@ export default {
     },
     playTickingSound() {
       if(this.isMuted) return;
-      this.tickingAudio.volume =this.volume;
+      this.tickingAudio.volume = this.volume;
       this.tickingAudio.loop = true;
       this.tickingAudio.play();
     },
