@@ -1,9 +1,10 @@
-# Cringe Clock - ADHD Pomodoro for the Wildly Distractible 🕒🤪
+![ccicon](https://github.com/timsayshey/cringe-clock/assets/1148940/bc70d876-d58f-4817-b844-d0f8af1c88c0)
+
+# Cringe Clock - Desktop Pomodoro App for the Wildly Distractible
 
 Welcome to **Cringe Clock** - the Pomodoro timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a butterfly!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole or spent 4 hours making another stupid pomodoro (like I just did) when you were supposed to be working, this is for you.
 
 # [Click here to Download Installer](https://github.com/timsayshey/cringe-clock/releases)
-
 
 
 ## What is This Madness? 🤔
