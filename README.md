@@ -2,7 +2,9 @@
 
 # Cringe Clock - Desktop Pomodoro App for the Wildly Distractible
 
-Welcome to **Cringe Clock** - the Pomodoro timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a butterfly!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole or spent 4 hours making another stupid pomodoro (like I just did) when you were supposed to be working, this is for you.
+Welcome to **Cringe Clock** - the cross-platform desktop timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a squirrel!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole when you were supposed to be working, this is for you.
+
+### Supports Windows, Mac, and Linux
 
 # [Click here to Download Installer](https://github.com/timsayshey/cringe-clock/releases)
 
@@ -13,8 +15,7 @@ Cringe Clock is not your grandma's Pomodoro timer. It's a ticking, flashing, alw
 
 ### DEMO
 
-https://github.com/timsayshey/cringe-clock/assets/1148940/dfba60bf-d612-47f8-abaf-9542b457010e
-
+https://github.com/timsayshey/cringe-clock/assets/1148940/f3640db1-8730-45af-a67e-256b1661d692
 
 ### Features
 
