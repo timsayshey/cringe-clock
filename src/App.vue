@@ -44,16 +44,17 @@ div(v-if="showOptions")
     label(for="startingBpm") Color Change Rate (BPM):
     input(type="number", id="startingBpm", v-model="startingBPM")
   .option
+    label(for="doVoices") Voice Countdown / Encouragements:
+    input(type="checkbox", id="doVoices", v-model="doVoices")
+  .option
     label(for="autoStartPhase") Auto-Start Each Phase:
     input(type="checkbox", id="autoStartPhase", v-model="autoStartPhase")
   button(@click="toggleOptions") Save
   .option
     //- Show Electron App Version
-    .small-text Version: 1.0.2
+    .small-text Version: 1.0.3
     a.small-text(href="https://github.com/timsayshey/cringe-clock/releases", target="_blank") Check Updates
 </template>
-
-
 <script lang="ts">
 export default {
   data() {
@@ -78,9 +79,9 @@ export default {
         595: new Audio('https://outerplex.com/cringeclock/audio/encouragements/7%20-%20Roar%20loud%20jung%201.wav'),
       } as Record<number, HTMLAudioElement>,
       isBreakTime: false,
-      tickingAudio: new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_dbb9bd8504.mp3?filename=pop-39222.mp3'),
-      breakendAudio: new Audio('https://www.myinstants.com/media/sounds/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
-      workendAudio: new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3'),
+      tickingAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/pop-39222.mp3'),
+      breakendAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
+      workendAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/success-1-6297.mp3'),
       timeLeft: 0,
       timer: null as any,
       timerState: 'idle', // 'idle', 'running', 'paused', 'onBreak'
@@ -92,6 +93,7 @@ export default {
       showOptions: false,
       task: '',
       isMuted: false,
+      doVoices: true,
       startingBPM: 60,
       selectedTickingSound: 'bubbles',
       volume: 0.2,
@@ -99,11 +101,11 @@ export default {
       workDurationMinutes: 25, // Default 25 minutes
       breakDurationMinutes: 5, // Default 5 minutes
       tickingSounds: {
-        'bubbles': 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_dbb9bd8504.mp3?filename=pop-39222.mp3',
-        'fart': 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8b7e6fb35.mp3?filename=086424_small-realpoot106wav-37403.mp3',
-        'tickTock': 'https://cdn.pixabay.com/download/audio/2022/03/09/audio_4b7bb9d4c1.mp3?filename=ticking-clock_1-27477.mp3',
-        'cafeAmbience': 'https://cdn.pixabay.com/download/audio/2021/10/10/audio_1009cd220b.mp3?filename=cafe-ambience-9263.mp3',
-        'battlefield': 'https://cdn.pixabay.com/download/audio/2022/12/12/audio_ab25cea926.mp3?filename=modern-war-129016.mp3',
+        'bubbles': 'https://outerplex.com/cringeclock/audio/effects/pop-39222.mp3',
+        'fart': 'https://outerplex.com/cringeclock/audio/effects/086424_small-realpoot106wav-37403.mp3',
+        'tickTock': 'https://outerplex.com/cringeclock/audio/effects/ticking-clock_1-27477.mp3',
+        'cafeAmbience': 'https://outerplex.com/cringeclock/audio/effects/cafe-ambience-9263.mp3',
+        'battlefield': 'https://outerplex.com/cringeclock/audio/effects/modern-war-129016.mp3',
         'none': '',
       } as Record<string, string>
     };
@@ -129,7 +131,7 @@ export default {
   },
   methods: {
     playCountdownAudio(timeLeft: number) {
-      if (this.countdownAudios[timeLeft] && !this.isMuted && this.isFunMode && !this.isBreakTime) {
+      if (this.doVoices && this.countdownAudios[timeLeft] && !this.isMuted && this.isFunMode && !this.isBreakTime) {
         this.countdownAudios[timeLeft].volume = this.volume;
         this.countdownAudios[timeLeft].play();
       }

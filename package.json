@@ -5,7 +5,7 @@
     "name": "EiQ Interactive LLC",
     "email": "tim@eiqpro.com"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "build-electron-mac": "electron-builder -m --universal",
