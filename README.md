@@ -1,76 +1,63 @@
 ![ccicon](https://github.com/timsayshey/cringe-clock/assets/1148940/bc70d876-d58f-4817-b844-d0f8af1c88c0)
 
-# CringeClock - Desktop Pomodoro App for the Wildly Distractible
+# CringeClock
 
-Welcome to **CringeClock** - the cross-platform desktop timer that's so in-your-face, you can't help but stay on track. Designed with the distractible, the procrastinators, and the "oh look, a squirrel!" crowd in mind. If you've ever found yourself three hours deep into a Wikipedia rabbit hole when you were supposed to be working, this is for you.
+A pomodoro timer that refuses to be ignored. Built for people who get distracted easily.
 
-### Supports Windows, Mac, and Linux
+**[Download for Windows, Mac, or Linux](https://github.com/timsayshey/cringe-clock/releases)**
 
-# [Click here to Download Installer](https://github.com/timsayshey/cringe-clock/releases)
+## What is this
 
+It's a pomodoro timer that flashes colors and makes noise. It stays on top of your other windows so you can't forget about it. The background changes color at a pace that slows down as your work session progresses.
 
-## What is This Madness? 🤔
-
-CringeClock is not your grandma's Pomodoro timer. It's a ticking, flashing, always-on-top reminder that time is slipping away, and you should probably be doing something more productive than you are right now.
-
-### DEMO
+### Demo
 
 https://github.com/timsayshey/cringe-clock/assets/1148940/f3640db1-8730-45af-a67e-256b1661d692
 
 ### Features
 
-- **Always On Top**: Like the most annoying friend who won't let you bail on gym day, CringeClock stays in your face.
-- **Flashing UI**: Subtlety is not our thing. The UI flashes to keep your wandering eyes glued to the task. Warning for those with health conditions sensitive to flashing lights.
-- **Ticking Sound**: Because nothing says "get to work" like the relentless sound of a ticking clock.
-- **ADHD-Friendly**: Specifically designed for those who need a little (read: a lot) of extra push to stay focused.
-- **Customizable**: Because even the easily distracted have preferences.
+- Always on top of other windows
+- Flashing colors (be careful if you're sensitive to flashing lights)
+- Multiple ticking sounds to choose from (or turn them off)
+- Voice countdowns and encouragements
+- Adjustable work/break durations
+- Adjustable color change rate (BPM)
 
-## Getting Started 🚀
+## Windows SmartScreen Warning
 
-CringeClock is built with Vue and Electron, because we believe in using a sledgehammer to crack a nut.
+Windows will show a SmartScreen warning because the app isn't code-signed. Code signing certificates cost a few hundred dollars a year and this is a free project.
 
-1. **Clone this repository**:
-   ```sh
-   git clone https://github.com/timsayshey/cringe-clock.git
-   ```
+The app is open source, you can read all the code yourself. To run it anyway:
 
-2. **Navigate to the project directory**:
-   ```sh
-   cd cringe-clock
-   ```
+1. Click "More info" on the warning
+2. Click "Run anyway"
 
-3. **Install dependencies** (yes, it has those):
-   ```sh
-   npm install
-   ```
+Or just build it from source.
 
-4. **Start the madness**:
-   ```sh
-   npm start
-   ```
+## Running locally
 
-## How to Contribute 🤝
+```sh
+git clone https://github.com/timsayshey/cringe-clock.git
+cd cringe-clock
+npm install
+npm start
+```
 
-Got an idea to make CringeClock even more absurdly over-the-top? Forks and PRs are welcome. This project thrives on chaos and caffeine.
+## Building
 
-### Wishlist:
+```sh
+npm run build-vue
+npm run build-electron-mac    # or -windows or -linux
+```
 
-- Mute button for flashing only
-- More sound annoying sounds to choose from
-- Current task textfield with checkbox with a list of completed tasks (persisted between launches)
+## Contributing
 
-## Finally
+PRs welcome. Some things that would be nice:
 
-Remember, CringeClock is designed to be annoyingly helpful. It's not a bug; it's a feature!
+- Mute button for flashing only (no sound)
+- More annoying sounds
+- Task list that persists between sessions
 
-## License 📄
+## License
 
-CringeClock is released under the MIT License.
-
-Copyright 2023 EiQ Interactive LLC
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MIT License - Copyright 2023 EiQ Interactive LLC

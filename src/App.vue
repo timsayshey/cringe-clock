@@ -41,7 +41,7 @@ div(v-if="showOptions")
     label(for="breakTime") Break Time (minutes):
     input(type="number", id="breakTime", v-model="breakDurationMinutes")
   .option
-    label(for="startingBpm") Color Change Rate (BPM):
+    label(for="startingBpm") Starting BPM (slows to 60):
     input(type="number", id="startingBpm", v-model="startingBPM")
   .option
     label(for="doVoices") Voice Countdown / Encouragements:
@@ -52,7 +52,7 @@ div(v-if="showOptions")
   button(@click="toggleOptions") Save
   .option
     //- Show Electron App Version
-    .small-text Version: 1.0.3
+    .small-text Version: 1.0.4
     a.small-text(href="https://github.com/timsayshey/cringe-clock/releases", target="_blank") Check Updates
 </template>
 <script lang="ts">
@@ -60,28 +60,28 @@ export default {
   data() {
     return {
       countdownAudios: {
-        5: new Audio('https://outerplex.com/cringeclock/audio/countdown/001.wav'), // 10 seconds
-        20: new Audio('https://outerplex.com/cringeclock/audio/countdown/002.wav'), // 20 seconds
-        30: new Audio('https://outerplex.com/cringeclock/audio/countdown/003.wav'), // 30 seconds
-        40: new Audio('https://outerplex.com/cringeclock/audio/countdown/004.wav'), // 40 seconds
-        50: new Audio('https://outerplex.com/cringeclock/audio/countdown/005.wav'), // 50 seconds
-        60: new Audio('https://outerplex.com/cringeclock/audio/countdown/006.wav'), // 1 minutes remaining
-        90: new Audio('https://outerplex.com/cringeclock/audio/encouragements/1%20-%20Swing%20big%20home%202.wav'),
-        120: new Audio('https://outerplex.com/cringeclock/audio/countdown/007.wav'), // 2 minutes remaining
-        150: new Audio('https://outerplex.com/cringeclock/audio/encouragements/2%20-%20Sparkle%20up%20sta%201.wav'),
-        180: new Audio('https://outerplex.com/cringeclock/audio/countdown/008.wav'), // 3 minutes remaining
-        200: new Audio('https://outerplex.com/cringeclock/audio/encouragements/3%20-%20Sprint%20it%20out%202.wav'),
-        240: new Audio('https://outerplex.com/cringeclock/audio/countdown/009.wav'), // 4 minutes remaining
-        280: new Audio('https://outerplex.com/cringeclock/audio/encouragements/4%20-%20Ignite%20the%20fire%201.wav'),
-        300: new Audio('https://outerplex.com/cringeclock/audio/countdown/010.wav'), // 5 minutes remaining
-        400: new Audio('https://outerplex.com/cringeclock/audio/encouragements/5%20-%20Glide%20high%20eag%201.wav'),
-        500: new Audio('https://outerplex.com/cringeclock/audio/encouragements/6%20-%20Bust%20moves%20dan%201.wav'),
-        595: new Audio('https://outerplex.com/cringeclock/audio/encouragements/7%20-%20Roar%20loud%20jung%201.wav'),
+        5: new Audio('/audio/countdown/001.wav'), // 10 seconds
+        20: new Audio('/audio/countdown/002.wav'), // 20 seconds
+        30: new Audio('/audio/countdown/003.wav'), // 30 seconds
+        40: new Audio('/audio/countdown/004.wav'), // 40 seconds
+        50: new Audio('/audio/countdown/005.wav'), // 50 seconds
+        60: new Audio('/audio/countdown/006.wav'), // 1 minutes remaining
+        90: new Audio('/audio/encouragements/1 - Swing big home 2.wav'),
+        120: new Audio('/audio/countdown/007.wav'), // 2 minutes remaining
+        150: new Audio('/audio/encouragements/2 - Sparkle up sta 1.wav'),
+        180: new Audio('/audio/countdown/008.wav'), // 3 minutes remaining
+        200: new Audio('/audio/encouragements/3 - Sprint it out 2.wav'),
+        240: new Audio('/audio/countdown/009.wav'), // 4 minutes remaining
+        280: new Audio('/audio/encouragements/4 - Ignite the fire 1.wav'),
+        300: new Audio('/audio/countdown/010.wav'), // 5 minutes remaining
+        400: new Audio('/audio/encouragements/5 - Glide high eag 1.wav'),
+        500: new Audio('/audio/encouragements/6 - Bust moves dan 1.wav'),
+        595: new Audio('/audio/encouragements/7 - Roar loud jung 1.wav'),
       } as Record<number, HTMLAudioElement>,
       isBreakTime: false,
-      tickingAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/pop-39222.mp3'),
-      breakendAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
-      workendAudio: new Audio('https://outerplex.com/cringeclock/audio/effects/success-1-6297.mp3'),
+      tickingAudio: new Audio('/audio/effects/pop-39222.mp3'),
+      breakendAudio: new Audio('/audio/effects/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
+      workendAudio: new Audio('/audio/effects/success-1-6297.mp3'),
       timeLeft: 0,
       timer: null as any,
       timerState: 'idle', // 'idle', 'running', 'paused', 'onBreak'
@@ -94,18 +94,18 @@ export default {
       task: '',
       isMuted: false,
       doVoices: true,
-      startingBPM: 60,
+      startingBPM: 120,
       selectedTickingSound: 'bubbles',
       volume: 0.2,
       autoStartPhase: true,
       workDurationMinutes: 25, // Default 25 minutes
       breakDurationMinutes: 5, // Default 5 minutes
       tickingSounds: {
-        'bubbles': 'https://outerplex.com/cringeclock/audio/effects/pop-39222.mp3',
-        'fart': 'https://outerplex.com/cringeclock/audio/effects/086424_small-realpoot106wav-37403.mp3',
-        'tickTock': 'https://outerplex.com/cringeclock/audio/effects/ticking-clock_1-27477.mp3',
-        'cafeAmbience': 'https://outerplex.com/cringeclock/audio/effects/cafe-ambience-9263.mp3',
-        'battlefield': 'https://outerplex.com/cringeclock/audio/effects/modern-war-129016.mp3',
+        'bubbles': '/audio/effects/pop-39222.mp3',
+        'fart': '/audio/effects/086424_small-realpoot106wav-37403.mp3',
+        'tickTock': '/audio/effects/ticking-clock_1-27477.mp3',
+        'cafeAmbience': '/audio/effects/cafe-ambience-9263.mp3',
+        'battlefield': '/audio/effects/modern-war-129016.mp3',
         'none': '',
       } as Record<string, string>
     };
