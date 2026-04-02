@@ -52,7 +52,7 @@ div(v-if="showOptions")
   button(@click="toggleOptions") Save
   .option
     //- Show Electron App Version
-    .small-text Version: 1.0.4
+    .small-text Version: 1.0.5
     a.small-text(href="https://github.com/timsayshey/cringe-clock/releases", target="_blank") Check Updates
 </template>
 <script lang="ts">
@@ -60,28 +60,28 @@ export default {
   data() {
     return {
       countdownAudios: {
-        5: new Audio('/audio/countdown/001.wav'), // 10 seconds
-        20: new Audio('/audio/countdown/002.wav'), // 20 seconds
-        30: new Audio('/audio/countdown/003.wav'), // 30 seconds
-        40: new Audio('/audio/countdown/004.wav'), // 40 seconds
-        50: new Audio('/audio/countdown/005.wav'), // 50 seconds
-        60: new Audio('/audio/countdown/006.wav'), // 1 minutes remaining
-        90: new Audio('/audio/encouragements/1 - Swing big home 2.wav'),
-        120: new Audio('/audio/countdown/007.wav'), // 2 minutes remaining
-        150: new Audio('/audio/encouragements/2 - Sparkle up sta 1.wav'),
-        180: new Audio('/audio/countdown/008.wav'), // 3 minutes remaining
-        200: new Audio('/audio/encouragements/3 - Sprint it out 2.wav'),
-        240: new Audio('/audio/countdown/009.wav'), // 4 minutes remaining
-        280: new Audio('/audio/encouragements/4 - Ignite the fire 1.wav'),
-        300: new Audio('/audio/countdown/010.wav'), // 5 minutes remaining
-        400: new Audio('/audio/encouragements/5 - Glide high eag 1.wav'),
-        500: new Audio('/audio/encouragements/6 - Bust moves dan 1.wav'),
-        595: new Audio('/audio/encouragements/7 - Roar loud jung 1.wav'),
+        5: new Audio('./audio/countdown/001.wav'), // 10 seconds
+        20: new Audio('./audio/countdown/002.wav'), // 20 seconds
+        30: new Audio('./audio/countdown/003.wav'), // 30 seconds
+        40: new Audio('./audio/countdown/004.wav'), // 40 seconds
+        50: new Audio('./audio/countdown/005.wav'), // 50 seconds
+        60: new Audio('./audio/countdown/006.wav'), // 1 minutes remaining
+        90: new Audio('./audio/encouragements/1 - Swing big home 2.wav'),
+        120: new Audio('./audio/countdown/007.wav'), // 2 minutes remaining
+        150: new Audio('./audio/encouragements/2 - Sparkle up sta 1.wav'),
+        180: new Audio('./audio/countdown/008.wav'), // 3 minutes remaining
+        200: new Audio('./audio/encouragements/3 - Sprint it out 2.wav'),
+        240: new Audio('./audio/countdown/009.wav'), // 4 minutes remaining
+        280: new Audio('./audio/encouragements/4 - Ignite the fire 1.wav'),
+        300: new Audio('./audio/countdown/010.wav'), // 5 minutes remaining
+        400: new Audio('./audio/encouragements/5 - Glide high eag 1.wav'),
+        500: new Audio('./audio/encouragements/6 - Bust moves dan 1.wav'),
+        595: new Audio('./audio/encouragements/7 - Roar loud jung 1.wav'),
       } as Record<number, HTMLAudioElement>,
       isBreakTime: false,
-      tickingAudio: new Audio('/audio/effects/pop-39222.mp3'),
-      breakendAudio: new Audio('/audio/effects/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
-      workendAudio: new Audio('/audio/effects/success-1-6297.mp3'),
+      tickingAudio: new Audio('./audio/effects/pop-39222.mp3'),
+      breakendAudio: new Audio('./audio/effects/8e8118_counter_strike_go_go_go_sound_effect.mp3'),
+      workendAudio: new Audio('./audio/effects/success-1-6297.mp3'),
       timeLeft: 0,
       timer: null as any,
       timerState: 'idle', // 'idle', 'running', 'paused', 'onBreak'
@@ -101,11 +101,11 @@ export default {
       workDurationMinutes: 25, // Default 25 minutes
       breakDurationMinutes: 5, // Default 5 minutes
       tickingSounds: {
-        'bubbles': '/audio/effects/pop-39222.mp3',
-        'fart': '/audio/effects/086424_small-realpoot106wav-37403.mp3',
-        'tickTock': '/audio/effects/ticking-clock_1-27477.mp3',
-        'cafeAmbience': '/audio/effects/cafe-ambience-9263.mp3',
-        'battlefield': '/audio/effects/modern-war-129016.mp3',
+        'bubbles': './audio/effects/pop-39222.mp3',
+        'fart': './audio/effects/086424_small-realpoot106wav-37403.mp3',
+        'tickTock': './audio/effects/ticking-clock_1-27477.mp3',
+        'cafeAmbience': './audio/effects/cafe-ambience-9263.mp3',
+        'battlefield': './audio/effects/modern-war-129016.mp3',
         'none': '',
       } as Record<string, string>
     };
