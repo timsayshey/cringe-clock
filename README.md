@@ -60,4 +60,4 @@ PRs welcome. Some things that would be nice:
 
 ## License
 
-MIT License - Copyright 2023 EiQ Interactive LLC
+MIT License
